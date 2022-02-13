@@ -9,6 +9,10 @@ import numpy as np
 ##################################       different methods to scale our numerical values        ######################
 ######################################################################################################################
 
+##Normally X = X_num
+#receives a database with the numerical values
+#returns the same database with the values scaled according to the selected method
+
 def maxmin_scaler (X):
     from sklearn.preprocessing import MinMaxScaler
     df = MinMaxScaler().fit(X).transform(X)
@@ -67,6 +71,11 @@ def pow_scaler (X):
 ################################       different methods to sample our numerical values        #######################
 ######################################################################################################################
 
+##Normally X = X_full (data before train)
+##Normally y = Goal
+#receives a database
+#returns the same database with the values sampled according to the selected method
+
 def smote_sample(X,y):
     from imblearn.over_sampling import SMOTE 
     sampler = SMOTE()
@@ -102,6 +111,13 @@ def randomover_sample(X,y):
 ######################################################################################################################
 #################################     different methods to train your model          #################################
 ######################################################################################################################
+
+##Normally X = X_full (data before train)
+##Normally y = Goal
+#control = (1, 0) if 1: change y column from Yes,No to 1,0
+#receives a database
+#returns accuracy of model, confusion matrix plot, roc_curve plot
+
 
 def logistic_regresion_train(X,y,control):
     from sklearn.model_selection import train_test_split 
@@ -145,13 +161,65 @@ def logistic_regresion_train(X,y,control):
     ax[2].plot(fpr,tpr,label='roc model,auc='+str(auc))
     ax[2].legend(loc=4)
     plt.show()
-    
-
+   
     return
 
 ######################################################################################################################
 ######################################################################################################################
 ######################################################################################################################
+
+
+
+######################################################################################################################
+##################################################     usefl functions          ######################################
+######################################################################################################################
+
+#Receive a column from pandas with Yes and No and return the same with 1 and 0
+def yes_no_to_0_1(data):
+    if x in ['No', 'NO']:
+        return 0
+    else: 
+        return 1
+    
+#Recive a database and return all Value_counts()
+def show_values(data):
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    for column in data:    
+        #used to underline the text
+        print("\033[4m" + data[column].name + "\033[0m")
+        print(data[column].value_counts())
+        #fig, (ax) = plt.subplots(1,1, figsize=(5, 5))
+        #sns.displot(data[column], ax=ax)
+        #plt.show()
+        print("")
+        print("")
+
+
+######################################################################################################################
+######################################################################################################################
+######################################################################################################################
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
